@@ -12,6 +12,19 @@ describe('GET /', () => {
     });
 });
 
+describe('GET /setup', () => {
+    it('should create a table if it does not exist', (done) => {
+      supertest(app)
+        .get('/setup')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          const message = res.body.message;
+          assert.strictEqual(message, 'Succesfully created table', 'Unexpected message');
+          done();
+        });
+    });
+    
 /*describe('GET /', () => {
   it('should return a list of cats', (done) => {
     supertest(app)
