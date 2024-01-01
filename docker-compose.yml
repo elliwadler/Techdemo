@@ -8,6 +8,16 @@ services:
       POSTGRES_DB: cats_db
       POSTGRES_PORT: 5432
   app:
-    image: my-techdemo-app
+    container_name: my-techdemo-app
+    image: elliw01/my-techdemo-app:latest
+
     ports:
       - 13000:3000
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    environment:
+      - WATCHTOWER_CLEANUP=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 my-techdemo-app

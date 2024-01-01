@@ -43,4 +43,8 @@ app.get('/setup', async (req, res) =>{
     }
 })
 
+app.get('/ping', (req, res) => {
+    res.send('pong!')
+})
+
 app.listen(port, () => console.log(`Server has started on port: ${port}`))
