@@ -32,3 +32,7 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{ github.sha }}
+
+      - name: Deploy with Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml up -d
