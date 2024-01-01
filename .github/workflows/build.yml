@@ -9,6 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Debugging
+        run: |
+          docker version
+          docker info
+          docker images
+          echo "Docker Hub Username: ${{ secrets.DOCKER_USERNAME }}"
+
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -17,11 +24,11 @@ jobs:
           docker build -t my-techdemo-app:${{ github.sha }} .
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Push Docker Image
         run: |
-          docker push docker.io/my-techdemo-app:${{ github.sha }}
+          docker push my-techdemo-app:${{ github.sha }}
