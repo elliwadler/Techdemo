@@ -13,6 +13,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Set Docker Image Tag
+        id: set-docker-image-tag
+        run: echo "DOCKER_IMAGE_TAG=${{ github.run_number }}" >> $GITHUB_ENV
+        env:
+          DOCKER_IMAGE_TAG: ${{ github.run_number }}
+
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v2
 
@@ -26,5 +32,5 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{ env.DOCKER_IMAGE_TAG }}
     
