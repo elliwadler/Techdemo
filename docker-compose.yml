@@ -14,14 +14,7 @@ services:
     ports:
       - 13000:3000
     environment:
-      NODE_ENV: development  # Set the environment to development
-
-  app-test:  # New testing service
-    container_name: my-techdemo-app-test
-    image: elliw01/my-techdemo-app:latest
-    environment:
-      NODE_ENV: test  # Set the environment to test
-    command: npm test  # Run tests when the container starts
+      NODE_ENV: development 
 
   watchtower:
     container_name: watchtower
