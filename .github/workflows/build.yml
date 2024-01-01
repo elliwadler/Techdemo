@@ -14,7 +14,6 @@ jobs:
           docker version
           docker info
           docker images
-          echo "Docker Hub Username: ${{ secrets.DOCKER_USERNAME }}"
 
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -25,8 +24,11 @@ jobs:
 
       - name: Tag Docker Image
         run: |
-          docker tag my-techdemo-app:${{ github.sha }} localhost:5000/my-techdemo-app:${{ github.sha }}
+          docker tag my-techdemo-app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{ github.sha }}
 
-      - name: Push Docker Image to Local Registry
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Push Docker Image to Docker Hub
         run: |
-          docker push localhost:5000/my-techdemo-app:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{ github.sha }}
