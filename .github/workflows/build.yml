@@ -27,4 +27,4 @@ jobs:
 
       - name: Push Docker Image
         run: |
-          docker push my-techdemo-app:${{ github.sha }}
+          docker push docker.io/my-techdemo-app:${{ github.sha }}
