@@ -44,7 +44,7 @@ describe('Integration Tests', () => {
     expect(response.text).to.equal('pong!');
   });
 
- /* it('should respond with "pong!" for /ping endpoint', async () => {
+  it('should respond with "pong!" for /ping endpoint', async () => {
     expect(true).to.equal(false);
-  });*/
+  });
 });
