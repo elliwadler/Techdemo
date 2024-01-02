@@ -35,7 +35,7 @@ describe('Integration Tests', () => {
     const getAllCatsResponse = await request(app).get('/');
     expect(getAllCatsResponse.status).to.equal(200);
     const addedCat = getAllCatsResponse.body.cats.find(cat => cat.name === catData.name && cat.breed === catData.breed);
-    expect(addedCat).to.be.defined;
+    expect(addedCat).to.not.be.undefined;
   });
 
   it('should respond with "pong!" for /ping endpoint', async () => {
