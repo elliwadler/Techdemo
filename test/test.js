@@ -4,10 +4,11 @@ const expect = require('chai').expect;
 
 describe('Integration Tests', () => {
   it('should set up the database table', async () => {
+    // Your test logic here
     expect(true).to.equal(true);  // Replace with your actual test
   });
 
-  it('should set up the database table', async () => {
+  it('should handle /setup endpoint', async () => {
     const response = await request(app).get('/setup');
     expect(response.status).to.equal(200);
     // Add more specific assertions based on your expected response structure
@@ -15,8 +16,8 @@ describe('Integration Tests', () => {
 
   it('should get all cats from the database', async () => {
     const response = await request(app).get('/');
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('cats');
+    expect(response.status).to.equal(200);
+    expect(response.body).to.have.property('cats');
     // Add more specific assertions based on your expected response structure
   });
 
@@ -25,21 +26,21 @@ describe('Integration Tests', () => {
     const response = await request(app)
       .post('/')
       .send(catData);
-      
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('message', 'Successfully added cat');
+
+    expect(response.status).to.equal(200);
+    expect(response.body).to.have.property('message', 'Successfully added cat');
     // Add more specific assertions based on your expected response structure
 
     // You can also make another request to check if the added cat is in the database
     const getAllCatsResponse = await request(app).get('/');
-    expect(getAllCatsResponse.status).toBe(200);
+    expect(getAllCatsResponse.status).to.equal(200);
     const addedCat = getAllCatsResponse.body.cats.find(cat => cat.name === catData.name && cat.breed === catData.breed);
-    expect(addedCat).toBeDefined();
+    expect(addedCat).to.be.defined;
   });
 
   it('should respond with "pong!" for /ping endpoint', async () => {
     const response = await request(app).get('/ping');
-    expect(response.status).toBe(200);
-    expect(response.text).toBe('pong!');
+    expect(response.status).to.equal(200);
+    expect(response.text).to.equal('pong!');
   });
 });
