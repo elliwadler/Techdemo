@@ -36,8 +36,8 @@ jobs:
 
       - name: Run Tests
         run: |
+          CI=true npm test
           if [ $? -ne 0 ]; then
             git reset --hard HEAD@{1}
             echo "Rolling back changes due to test failure"
           fi
-          CI=true npm test
