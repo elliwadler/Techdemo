@@ -35,14 +35,3 @@ jobs:
       - name: Run Tests
         run: npm test
 
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: success('test')
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Deploy to Dev
-        # Add your deployment steps here
