@@ -50,5 +50,4 @@ jobs:
         run:   echo ${{ needs.test.result }}
 
       - name: Rollback Changes
-        run:   echo ${{ needs.test.result }}
         run: git reset --hard HEAD@{1}
