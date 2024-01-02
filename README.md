@@ -6,5 +6,7 @@
 ## Git Hub Actions + autoated using newest image
 https://medium.com/@avash700/ci-cd-made-easy-github-actions-docker-compose-and-watchtower-60a698d24f27
 
-## Testing
----dfaf
+## Push Code
+
+git tag v1.0
+git push origin v1.0
