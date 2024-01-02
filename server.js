@@ -20,7 +20,7 @@ app.post('/', async (req, res) => {
     const { name, breed } = req.body
     try{
         await pool.query(`INSERT INTO cats(name, breed) VALUES ($1, $2)`, [name, breed])
-        res.status(200).send({message: "Succesfully added cat"})
+        res.status(200).send({message: "Successfully added cat"})
     } catch (err){
         console.log(err)
         res.sendStatus(500)
