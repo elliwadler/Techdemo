@@ -22,11 +22,16 @@ jobs:
       - name: Set Release Version
         run: |
           echo "BUILD_VERSION=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
-      - name: build and push api
-        id: build-push-api
-        uses: docker/build-push-action@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{ env.BUILD_VERSION }}
+          images: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app
+          
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: 
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
