@@ -40,11 +40,15 @@ jobs:
 
   rollback:
     needs: test
-    if: ${{ needs.test.result != 'success' }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: test
+        run:   echo ${{ needs.test.result }}
+
       - name: Rollback Changes
+        run:   echo ${{ needs.test.result }}
         run: git reset --hard HEAD@{1}
