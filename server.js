@@ -4,7 +4,7 @@ const port = 3000
 
 const app = express()
 app.use(express.json())
-
+console.log('Using database configuration:', pool.options);
 //routes
 app.get('/', async (req, res) => {
     try{

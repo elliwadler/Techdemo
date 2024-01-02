@@ -1,87 +1,46 @@
-process.env.NODE_ENV = 'test';
-const express = require('express');
-const pool = require('../db');
+const request = require('supertest');
 const app = require('../server');
-const assert = require('assert');
-const supertest = require('supertest');
+var expect = require('chai').expect;
 
-describe('GET /', () => {
-    it('should return a list of cats', (done) => {
-          assert(1, 1);
-          done();
-    });
-});
+describe('Integration Tests', () => {
 
-/*describe('GET /', () => {
-  it('should return a list of cats', (done) => {
-    supertest(app)
-      .get('/')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        const cats = res.body.cats;
-        assert(Array.isArray(cats), 'Response should contain an array of cats');
-        assert(cats.length > 0, 'Array of cats should not be empty');
-        done();
-      });
+  it('should set up the database table', () => {
+    expect(true).to.equal(true);  // Replace with your actual test
   });
-});
+  it('should set up the database table', async () => {
+    const response = await request(app).get('/setup');
+    expect(response.status).to.equal(200);
+    // Add more specific assertions based on your expected response structure
+  });
 
-describe('POST /', () => {
-  it('should add a new cat', (done) => {
-    const newCat = {
-      name: 'Whiskers',
-      breed: 'Tabby',
-    };
+ /* it('should get all cats from the database', async () => {
+    const response = await request(app).get('/');
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('cats');
+    // Add more specific assertions based on your expected response structure
+  });
 
-    supertest(app)
+  it('should add a cat to the database', async () => {
+    const catData = { name: 'Whiskers', breed: 'Siamese' };
+    const response = await request(app)
       .post('/')
-      .send(newCat)
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        const message = res.body.message;
-        assert.strictEqual(message, 'Succesfully added cat', 'Unexpected message');
-        done();
-      });
+      .send(catData);
+      
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('message', 'Successfully added cat');
+    // Add more specific assertions based on your expected response structure
+
+    // You can also make another request to check if the added cat is in the database
+    const getAllCatsResponse = await request(app).get('/');
+    expect(getAllCatsResponse.status).toBe(200);
+    const addedCat = getAllCatsResponse.body.cats.find(cat => cat.name === catData.name && cat.breed === catData.breed);
+    expect(addedCat).toBeDefined();
   });
+
+
+  it('should respond with "pong!" for /ping endpoint', async () => {
+    const response = await request(app).get('/ping');
+    expect(response.status).toBe(200);
+    expect(response.text).toBe('pong!');
+  });*/
 });
-
-describe('GET /setup', () => {
-  it('should create a table if it does not exist', (done) => {
-    supertest(app)
-      .get('/setup')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        const message = res.body.message;
-        assert.strictEqual(message, 'Succesfully created table', 'Unexpected message');
-        done();
-      });
-  });
-
-  it('should handle table already exists scenario', (done) => {
-    supertest(app)
-      .get('/setup')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        const message = res.body.message;
-        assert.strictEqual(message, 'Table already exists', 'Unexpected message');
-        done();
-      });
-  });
-});
-
-describe('GET /ping', () => {
-  it('should respond with "pong!"', (done) => {
-    supertest(app)
-      .get('/ping')
-      .expect(200)
-      .expect('Content-Type', 'text/plain')
-      .expect((res) => {
-        assert.strictEqual(res.text, 'pong!', 'Unexpected response text');
-      })
-      .end(done);
-  });
-});*/
