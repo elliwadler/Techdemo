@@ -19,6 +19,9 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Set Release Version
+        run: |
+          echo "BUILD_VERSION=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
       - name: build and push api
         id: build-push-api
         uses: docker/build-push-action@v3
@@ -26,4 +29,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{steps.date.outputs.date}}
+          tags: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:${{ env.BUILD_VERSION }}
