@@ -1,13 +1,31 @@
-name: Docker Compose CI/CD
+name: Release
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: "Version to release"
+  pull_request:
+    types:
+      - opened
+      - closed
+      - labeled
 
 jobs:
+  release_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: gitflow-workflow-action release workflows
+        uses: hoangvvo/gitflow-workflow-action@<TAG>
+        with:
+          develop_branch: "dev"
+          main_branch: "main"
+          merge_back_from_main: false
+          version: ${{ inputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     name: build && push image to docker hub
     runs-on: ubuntu-latest
